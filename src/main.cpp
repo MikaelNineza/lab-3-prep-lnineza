@@ -34,6 +34,7 @@ int main() {
     int* released = releasePtr1.release();
     assert(releasePtr1 == nullptr);
     assert(*released == 3);
+    delete released;
     
     // Reset
     UniquePtr<int> resetPtr1(new int(3));
