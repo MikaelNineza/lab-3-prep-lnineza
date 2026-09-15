@@ -57,7 +57,9 @@ class UniquePtr {
         }
 
         void swap(UniquePtr<T>& other) {
-            std::swap(mPtr, other.mPtr);
+            T* tempT = mPtr;
+            mPtr = other.mPtr;
+            other.mPtr = tempT;
         }
 
         operator bool() const {return mPtr != nullptr;}
