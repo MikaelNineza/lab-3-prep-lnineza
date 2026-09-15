@@ -66,4 +66,11 @@ class UniquePtr {
         T* mPtr;
 };
 
+template <class T, class... Args>
+    UniquePtr<T> makeUnique(Args&&... args)
+    {
+        T* p = new T(std::forward<Args>(args)...);
+        return new UniquePtr(p);
+    }
+
 #endif
