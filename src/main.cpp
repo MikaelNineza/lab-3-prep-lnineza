@@ -48,5 +48,20 @@ int main() {
     assert(*(swapPtr1.get()) == 2);
     assert(*(swapPtr2.get()) == 1);
 
+    // makeUnique
+    UniquePtr<int> uniquePtr1 = makeUnique<int>(1);
+    auto uniquePtr2 = makeUnique<int>(1);
+    assert(*(uniquePtr1.get()) == 1);
+    assert(uniquePtr1 != uniquePtr2);
+
+    // makeUnique move & copy
+    std::string moveString = "moved";
+    std::string copyString = "copied";
+    UniquePtr<std::string> uniquePtr3 = makeUnique<std::string>(std::move(moveString));
+    UniquePtr<std::string> uniquePtr4 = makeUnique<std::string>(copyString);
+    assert(*(uniquePtr3.get()) == "moved");
+    assert(*(uniquePtr4.get()) == copyString);
+    assert(moveString.empty());
+
     return 0;
 }
