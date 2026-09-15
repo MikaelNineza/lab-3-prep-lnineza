@@ -11,9 +11,7 @@ class UniquePtr {
         template <class U> friend class UniquePtr;
 
         UniquePtr(T* p = nullptr) : mPtr(p) {}
-
         UniquePtr(const UniquePtr<T>& other) = delete;
-
         UniquePtr(UniquePtr<T>&& other) {
             mPtr = other.release();
         }
@@ -27,10 +25,8 @@ class UniquePtr {
             delete mPtr;
         }
 
-        T& operator*() const {return *mPtr;}
-
+        
         UniquePtr<T>& operator=(const UniquePtr<T>& other) = delete;
-
         UniquePtr<T>& operator=(UniquePtr<T>&& other) {
             if (this != &other) {
                 delete mPtr;
@@ -38,12 +34,14 @@ class UniquePtr {
             }
             return *this;
         }
-
+        
+        bool operator==(const UniquePtr<T>& other) const {return mPtr == other.mPtr;}
+        T& operator*() const {return *mPtr;}
         T* operator->() const {return mPtr;}
+        operator bool() const {return mPtr != nullptr;}
 
         T* get() const { return mPtr;}
 
-        bool operator==(const UniquePtr<T>& other) const {return mPtr == other.mPtr;}
 
         T* release() {
             T* p = mPtr;
@@ -62,7 +60,6 @@ class UniquePtr {
             other.mPtr = tempT;
         }
 
-        operator bool() const {return mPtr != nullptr;}
 
     private:
         T* mPtr;
